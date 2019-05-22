@@ -323,6 +323,13 @@ module Terraforming
         it_behaves_like "CLI examples"
       end
 
+      describe "transfer" do
+        let(:klass)   { Terraforming::Resource::Transfer }
+        let(:command) { :transfer }
+
+        it_behaves_like "CLI examples"
+      end
+
       describe "vpc" do
         let(:klass)   { Terraforming::Resource::VPC }
         let(:command) { :vpc }

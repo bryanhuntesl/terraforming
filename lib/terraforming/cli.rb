@@ -210,6 +210,11 @@ module Terraforming
       execute(Terraforming::Resource::SQS, options)
     end
 
+    desc "transfer", "TRANSFER"
+    def transfer
+      execute(Terraforming::Resource::Transfer, options)
+    end
+
     desc "vpc", "VPC"
     def vpc
       execute(Terraforming::Resource::VPC, options)

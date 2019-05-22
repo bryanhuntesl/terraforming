@@ -1,0 +1,51 @@
+<% instances.each do |instance| 
+
+    server = instance[:server]
+    users = instance[:users]
+
+%>
+
+resource "aws_transfer_server" "<%= server.server_id %>" {
+    identity_provider_type = "<%= server.identity_provider_type %>"
+    logging_role = "<%= server.logging_role %>"
+    endpoint_type = "<%= server.endpoint_type %>"
+
+    <% server.tags.each do |tag| %>
+
+        tag {
+        key      = "<%= tag.key %>"
+        value    = "<%= tag.value %>"
+        }
+
+    <% end %>
+}
+
+<% users.each do |user| %>
+
+resource "aws_transfer_user" "<%= server.server_id %>_<%= user.user_name%>" {
+    server_id      = "<%= server.server_id %>"
+    user_name      = "<%= user.user_name%>"
+    role = "<%= user.role %>"
+    policy         = <<POLICY   
+<%= user.policy%>
+POLICY
+<% user.tags.each do |tag| %>
+    tag {
+        key      = "<%= tag.key %>"
+        value    = "<%= tag.value %>"
+    }
+<% end %>
+}
+
+<% user.ssh_public_keys.each do |key| %>   
+resource "aws_transfer_ssh_key" "<%= server.server_id %>_<%= user.user_name %>" {
+    server_id = "<%= server.server_id %>"
+    user_name = "<%= user.user_name %>"
+    body      = "<%= key.ssh_public_key_body %>"
+}
+
+        <% end %>
+
+    <% end %>
+
+<% end %>

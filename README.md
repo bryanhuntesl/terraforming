@@ -127,7 +127,9 @@ Commands:
   terraforming snss            # SNS Subscription
   terraforming sqs             # SQS
   terraforming vgw             # VPN Gateway
+  terraforming transfer        # Transfer
   terraforming vpc             # VPC
+
 
 Options:
   [--merge=MERGE]                                # tfstate file to merge
